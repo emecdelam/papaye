@@ -2,9 +2,9 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
-    "start": "remix-serve build",
+    "build": "dotenv -e .env.development -- remix build",
+    "dev": "dotenv -e .env.development -- remix dev",
+    "start": "dotenv -e .env.development -- remix-serve build",
     "setup": "prisma generate && dotenv -e .env.development -- prisma migrate dev",
     "typecheck": "tsc"
   },
@@ -20,7 +20,9 @@
     "dotenv-cli": "^7.2.1",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remix-auth": "^3.4.0",
+    "remix-auth-form": "^1.3.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.17.1",
