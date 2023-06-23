@@ -65,7 +65,7 @@ authenticator.use(new FormStrategy(async ({form}) => {
     return user
 }), "form-signup")
 
-export async function getUser(request: Request): Promise<Prisma.UserSelect> {
+export async function getUser(request: Request): Promise<{id: number, email: string, name: string}> {
     let user = await authenticator.isAuthenticated(request, {
         failureRedirect: "/login",
     });
