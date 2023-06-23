@@ -1,7 +1,7 @@
 {
   "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "lib": ["DOM", "DOM.Iterable", "ES2019","es6"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -16,7 +16,6 @@
       "~/*": ["./app/*"]
     },
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
 
     // Remix takes care of building everything in `remix build`.

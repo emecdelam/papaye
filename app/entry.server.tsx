@@ -10,10 +10,19 @@ import type { AppLoadContext, EntryContext } from "@remix-run/node";
 import { Response } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
-import "reflect-metadata"
 import { renderToPipeableStream } from "react-dom/server";
+import { datasource } from "./services/db";
 
 const ABORT_DELAY = 5_000;
+
+
+datasource.initialize()
+.then(() => {
+    console.log("Data Source has been initialized!")
+})
+.catch((err) => {
+    console.error("Error during Data Source initialization:", err)
+})
 
 export default function handleRequest(
   request: Request,
