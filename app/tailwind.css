@@ -50,3 +50,7 @@
   #root, #__next {
     isolation: isolate;
   }
+
+  table {
+    text-align: left;
+  }

@@ -1,13 +1,21 @@
-import { ActionArgs, LoaderArgs, json } from "@remix-run/node";
+import { ActionArgs, LoaderArgs, V2_MetaFunction, json } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { authenticator, getUser } from "~/services/auth.server";
 import {  destroySession, getSession } from "~/services/session.server";
-import { mainDiv } from "./login.css"
-export default function SignUpPage() {
+
+export const meta: V2_MetaFunction = () => {
+    return [
+      { title: "Login" },
+      { name: "description", content: "Login page" },
+    ];
+  };
+
+
+export default function LoginPage() {
     const data = useLoaderData<typeof loader>();
     return <div className="h-full">
-        <div className="w-full h-full grid place-items-center bg-gray-50">
-            <Form method="post" className="w-96">
+        <div className="w-full h-full grid place-items-center"  style={{backgroundImage: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80')", backgroundSize: "cover"}}>
+            <Form method="post" className="w-1/4 bg-white rounded-md p-10 shadow">
                 <div className="mb-10 font-bold text-3xl">
                 <p>Happy to see you back !</p>
                 </div>
