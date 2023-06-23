@@ -27,7 +27,7 @@ export default function ProjectPage() {
     
     return <div className="py-20 w-10/12">
         <div className="flex ml-16">
-            <h1 className="text-4xl mr-20">Your projects</h1>
+            <h1 className="text-4xl mr-10">Your projects</h1>
             <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" onClick={() => {
                 let name = prompt("Project name") || "";
                 fetcher.submit({
