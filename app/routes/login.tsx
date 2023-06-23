@@ -2,9 +2,10 @@ import { ActionArgs, LoaderArgs, json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { authenticator, getUser } from "~/services/auth.server";
 import {  destroySession, getSession } from "~/services/session.server";
+import { mainDiv } from "./login.css"
 export default function SignUpPage() {
     const data = useLoaderData<typeof loader>();
-    return <>
+    return <div className={mainDiv}>
     
         <p>Welcome to the log in page !</p>
         <Form method="post">
@@ -20,7 +21,7 @@ export default function SignUpPage() {
             </div>
             <button type="submit">Se connecter</button>
         </Form>
-    </>
+    </div>
 }
 
 export async function action({ request }: ActionArgs) {

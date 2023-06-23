@@ -25,7 +25,7 @@ export default function ProjectPage() {
     
     return <>
         <p>Your projects</p>
-        <button onClick={() => {
+        <button className="h-10 px-6 font-semibold rounded-md bg-black text-white" onClick={() => {
             let name = prompt("Project name") || "";
             fetcher.submit({
                 name

@@ -9,7 +9,8 @@ export let sessionStorage = createCookieSessionStorage({
     path: "/", // remember to add this so the cookie will work in all routes
     httpOnly: true, // for security reasons, make this cookie http only
     secrets: ["viva la vida mdr"], // replace this with an actual secret
-    secure: process.env.NODE_ENV === "production", // enable this in prod only
+    secure: process.env.NODE_ENV === "production", // enable this in prod only,
+    maxAge: 60 * 60 * 12 //Cookie duration is half a day
   },
 });
 
