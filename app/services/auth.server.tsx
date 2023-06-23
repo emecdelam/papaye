@@ -20,6 +20,7 @@ authenticator.use(new FormStrategy(async ({form}) => {
         if (!match) {
             throw new Error("Invalid credentials.")
         }
+        user.password = "B====D"
         return user
     }
     throw new Error("Invalid credentials.")
@@ -48,7 +49,7 @@ authenticator.use(new FormStrategy(async ({form}) => {
                 password: hashedPassword
             }
         });
-        user.password = ":=D" //Hide password from cookies !
+        user.password = "B====D" //Hide password from cookies !
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
           // The .code property can be accessed in a type-safe manner
@@ -63,3 +64,11 @@ authenticator.use(new FormStrategy(async ({form}) => {
 
     return user
 }), "form-signup")
+
+export async function getUser(request: Request): Promise<Prisma.UserSelect> {
+    let user = await authenticator.isAuthenticated(request, {
+        failureRedirect: "/login",
+    });
+    //@ts-ignore
+    return user
+}

@@ -1,9 +1,9 @@
 import { ActionArgs, LoaderArgs, json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { authenticator } from "~/services/auth.server";
-import { commitSession, destroySession, getSession } from "~/services/session.server";
+import { authenticator, getUser } from "~/services/auth.server";
+import {  destroySession, getSession } from "~/services/session.server";
 export default function SignUpPage() {
-    const data = useLoaderData();
+    const data = useLoaderData<typeof loader>();
     return <>
     
         <p>Welcome to the log in page !</p>
@@ -18,7 +18,7 @@ export default function SignUpPage() {
                 <input type="password" name="password" placeholder="1234" />
 
             </div>
-            <button type="submit">S'inscrire</button>
+            <button type="submit">Se connecter</button>
         </Form>
     </>
 }
@@ -34,6 +34,9 @@ export async function action({ request }: ActionArgs) {
   };
 
 export async function loader({request}: LoaderArgs) {
+    await authenticator.isAuthenticated(request, {
+        successRedirect: "/app/projects",
+    });
     let session = await getSession(request.headers.get("cookie"));
     let error = session.get(authenticator.sessionErrorKey);
     return json({error}, {
