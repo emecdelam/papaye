@@ -1,30 +1,42 @@
 import { ActionArgs, LoaderArgs, json } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
-import { authenticator } from "~/services/auth.server";
-import { commitSession, destroySession, getSession } from "~/services/session.server";
+import { Form, Link, useLoaderData } from "@remix-run/react";
+import { authenticator, getUser } from "~/services/auth.server";
+import {  destroySession, getSession } from "~/services/session.server";
+import { mainDiv } from "./login.css"
 export default function SignUpPage() {
     const data = useLoaderData<typeof loader>();
-    return <>
-    
-        <p>Welcome to the sign up page !</p>
-        <Form method="post">
-            {data.error ? data.error.message : ""}
-            <div>
-                <label htmlFor="name">Name: </label>
-              <input type="text" name="name"  placeholder="Rick Astley" />
-            </div>
-            <div>
-                <label htmlFor="email">Email: </label>
-                <input type="email" name="email" placeholder="givemeup@nevergonna.com" />
-            </div>
-            <div>
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" placeholder="1234" />
+    return <div className="h-full">
+        <div className="w-full h-full grid place-items-center bg-gray-50">
+            <Form method="post" className="w-96">
+                <div className="mb-10 font-bold text-3xl">
+                <p>Welcome !</p>
+                </div>
+                <div className="mb-5">
+                    <label className="block text-md font-semibold" htmlFor="name">Name</label>
+                    <input className="border border-gray-400 mt-1 rounded-md w-full px-5 py-2 bg-gray-50" type="text" name="name" placeholder="John Doe" />
+                </div>
+                <div className="mb-5">
+                    <label className="block text-md font-semibold" htmlFor="email">Email</label>
+                    <input className="border border-gray-400 mt-1 rounded-md w-full px-5 py-2 bg-gray-50" type="email" name="email" placeholder="john@doe.com" />
+                </div>
+                <div className="mb-10">
+                    <label className="block text-md font-semibold" htmlFor="password">Password </label>
+                    <input className="border border-gray-400 rounded-md mt-1 w-full px-5 py-2" type="password" name="password" placeholder="1234" />
 
-            </div>
-            <button type="submit">S'inscrire</button>
-        </Form>
-    </>
+                </div>
+                
+                
+                {data.error ? <div className="h-full bg-red-300 p-3 rounded-md mb-10">{data.error.message}</div> : ""}
+                
+                <div className="w-full flex justify-between items-center ">
+                <button className="bg-blue-700 text-white rounded-md px-6 h-10 cursor-pointer " type="submit">Create my account</button>
+                <Link to="/login" className="underline">I already have an account.</Link>
+                </div>
+            </Form>
+        </div>
+
+ 
+    </div>
 }
 
 export async function action({ request }: ActionArgs) {
