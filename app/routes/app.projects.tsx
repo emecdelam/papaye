@@ -1,5 +1,5 @@
 import { ActionArgs, LoaderArgs, json } from "@remix-run/node";
-import { useFetcher, useLoaderData } from "@remix-run/react";
+import { Link, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { prisma } from "~/db.server";
 import { getUser } from "~/services/auth.server";
@@ -24,6 +24,7 @@ export default function ProjectPage() {
     let data = useLoaderData<typeof loader>();
     let [filter, setFilter] = useState("")
     const fetcher = useFetcher();
+    const navigate = useNavigate();
     
     return <div className="py-20 w-10/12">
         <div className="flex ml-16">
@@ -51,10 +52,13 @@ export default function ProjectPage() {
                 </thead>
                 <tbody>
                 {data.projects.slice().filter(x => x.name.toLowerCase().includes(filter.toLowerCase())).reverse().map(x => <>
-                <tr className="hover:bg-gray-100 cursor-pointer">
+                <tr onClick={() => {
+                    navigate("/app/projects/"+x.id)
+                }} className="hover:bg-gray-100 cursor-pointer">
                     <td className="px-2 border h-12 border-slate-300 capitalize">{x.name}</td>
                     <td className="px-2 border h-12 border-slate-300">{new Date(x.lastModified).toLocaleString()}</td>
                 </tr>
+  
                 </>)}
                 </tbody>
        
