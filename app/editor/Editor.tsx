@@ -8,13 +8,19 @@ import { TitleModule } from "./modules/titles"
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
-        children: [{text:" gras", bold:true}]
-    }
+        children: [{text:" bougnoul", bold:true}],
+    },
+    {
+        type: 'image',
+        children: [{text:""}],
+        url:"https://cdn.discordapp.com/attachments/1090567982205378632/1122931813552234558/cute-baby-hippos-148-5908843187957__700.png"
+    },
+
 ]
 
 
 export default function EditorComponent() {
-    const [editor] = useState(() => withReact(createEditor()))
+    const [editor] = useState(() => withReact(useImage(createEditor())))
     const renderElementCallback = useCallback(props => renderElement(props), [])
     const renderLeafCallback = useCallback(props => renderLeaf(props), [])
     return (<>
@@ -26,7 +32,17 @@ export default function EditorComponent() {
                 FormattingModule.handleKeyDown(editor, event)
                 //Handle titles
                 TitleModule.handleKeyDown(editor,event)
-
+                //New paragraph
+                if (event.key === 'Enter') {
+                    event.preventDefault()
+                    Transforms.insertNodes(
+                        editor,
+                        {
+                            type:'paragraph',
+                            children: [{text:''}]
+                        }
+                    )
+                }
             }}/>
         </Slate>
     
@@ -37,6 +53,7 @@ export default function EditorComponent() {
 // TypeScript users only add this code
 import { BaseEditor, Descendant } from 'slate'
 import { ReactEditor } from 'slate-react'
+import { useImage } from "./modules/image"
 
 
 type CustomElement = { type: 'paragraph' | 'code' | 'title', children: CustomText[] }
