@@ -2,12 +2,13 @@
 import { useCallback, useState } from "react"
 import { Transforms, createEditor, Editor, Element } from "slate"
 import {withReact, Slate, Editable} from "slate-react"
-
+import { renderElement, renderLeaf } from "./renderers"
+import { FormattingModule } from "./modules/formatting"
 
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
-        children: [{text: "Hey im a super paragraph"}]
+        children: [{text: "Hey im a "}, {text:"super", bold:true}, {text:" paragraph"}, {text:" gras", bold:true}]
     }
 ]
 
@@ -34,8 +35,7 @@ export default function EditorComponent() {
 // TypeScript users only add this code
 import { BaseEditor, Descendant } from 'slate'
 import { ReactEditor } from 'slate-react'
-import { renderElement, renderLeaf } from "./renderers"
-import { FormattingModule } from "./modules/formatting"
+
 
 type CustomElement = { type: 'paragraph' | 'code', children: CustomText[] }
 type CustomText = { text: string}
