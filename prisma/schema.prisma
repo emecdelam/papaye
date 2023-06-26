@@ -13,6 +13,7 @@ model User {
   name            String?
   password        String?
   projects UsersOnProjects[]
+  comments Comment[]
 }
 
 model Project {
@@ -21,6 +22,7 @@ model Project {
   content         String
   users UsersOnProjects[]
   lastModified DateTime @default(now())
+  comments Comment[]
 }
 
 model UsersOnProjects {
@@ -31,4 +33,17 @@ model UsersOnProjects {
   permission Int
 
   @@id([projectId, userId])
+}
+
+model Comment {
+  id  Int @id @default(autoincrement())
+  parentId Int? @unique
+  parent Comment? @relation("CommentHistory", fields: [parentId], references: [id])
+  children Comment? @relation("CommentHistory")
+  content String
+  leafId Int
+  project Project @relation(fields: [projectId], references: [id]) 
+  projectId Int
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
