@@ -7,6 +7,7 @@
 From your terminal:
 
 ```sh
+
 npm run setup
 npm run dev
 ```
