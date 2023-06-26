@@ -41,7 +41,8 @@ model Comment {
   parent Comment? @relation("CommentHistory", fields: [parentId], references: [id])
   children Comment? @relation("CommentHistory")
   content String
-  leafId Int
+  leafId Int?
+  dateCreated DateTime @default(now())
   project Project @relation(fields: [projectId], references: [id]) 
   projectId Int
   userId Int
