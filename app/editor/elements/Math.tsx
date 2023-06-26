@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Node } from "slate"
 import katex from "katex"
 import { useSelected } from "slate-react"
@@ -15,7 +15,7 @@ export default function Math(props) {
     }, [slateSelected])
 
     if (focus || slateSelected) {
-        return <span {...props.attributes}>{props.children}</span>
+        return <span style={{backgroundColor: 'lightgray'}} {...props.attributes}>{props.children}</span>
     }
 
   

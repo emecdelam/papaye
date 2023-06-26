@@ -9,11 +9,22 @@ import { useMaths } from "./modules/math"
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
-        children: [{text:"Some text "}, {
-            type: "math",
-            children: [{text:"x^2"}],
-            toto: "test"
-        }, {text:" end of paragraph"}]
+        children: [
+            {
+                text:"Some text "
+            }, 
+            { 
+                type: "math",
+                children: [
+                    {
+                        text:"x^2"
+                    }
+                ],
+            }, 
+            {
+                text:" end of paragraph"
+            }
+        ]
     }
 ]
 
