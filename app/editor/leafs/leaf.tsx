@@ -3,7 +3,7 @@ export default function DefaultLeaf(props) {
         {
             fontWeight: props.leaf.bold ? 'bold' : 'normal',
             fontStyle: props.leaf.italic ? "italic" : 'inherit',
-            textDecoration: props.leaf.underline ? "underline": ""
+            textDecoration: props.leaf.underline ? "underline": "inherit"
         
         }}>
         {props.children}

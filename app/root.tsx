@@ -14,6 +14,7 @@ import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []), 
   { rel: "stylesheet", href: styles },
+  { rel: "stylesheet", href: 'https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css'}
 ];
 
 export default function App() {

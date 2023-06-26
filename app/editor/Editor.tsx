@@ -5,6 +5,7 @@ import {withReact, Slate, Editable} from "slate-react"
 import { renderElement, renderLeaf } from "./renderers"
 import { FormattingModule } from "./modules/formatting"
 import { TitleModule } from "./modules/titles"
+import { useMaths } from "./modules/math"
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
@@ -56,8 +57,8 @@ import { ReactEditor } from 'slate-react'
 import { useImage } from "./modules/image"
 
 
-type CustomElement = { type: 'paragraph' | 'code' | 'title', children: CustomText[] }
-type CustomText = { text: string}
+type CustomElement = { type: 'paragraph' | 'code' | 'title' | 'math', children: CustomText[] }
+type CustomText = { text: string} | {type: 'math', children: CustomText[]}
 
 declare module 'slate' {
   interface CustomTypes {

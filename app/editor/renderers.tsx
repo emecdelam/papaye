@@ -1,4 +1,5 @@
 import CodeElement from "./elements/Code"
+import Math from "./elements/Math"
 import Paragraph from "./elements/Paragraph"
 import Title from "./elements/Title"
 import Image from "./elements/Image"
@@ -8,6 +9,8 @@ export function renderElement(props) {
     switch (props.element.type) {
         case 'code':
             return <CodeElement {...props}/>
+        case 'math':
+            return <Math {...props}/>
         case 'title':
             return <Title {...props}/>
         case 'image':
