@@ -5,16 +5,32 @@ import {withReact, Slate, Editable} from "slate-react"
 import { renderElement, renderLeaf } from "./renderers"
 import { FormattingModule } from "./modules/formatting"
 import { TitleModule } from "./modules/titles"
+import { useMaths } from "./modules/math"
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
-        children: [{text:" gras", bold:true}]
+        children: [
+            {
+                text:"Some text "
+            }, 
+            { 
+                type: "math",
+                children: [
+                    {
+                        text:"x^2"
+                    }
+                ],
+            }, 
+            {
+                text:" end of paragraph"
+            }
+        ]
     }
 ]
 
 
 export default function EditorComponent() {
-    const [editor] = useState(() => withReact(createEditor()))
+    const [editor] = useState(() => withReact(useMaths(createEditor())))
     const renderElementCallback = useCallback(props => renderElement(props), [])
     const renderLeafCallback = useCallback(props => renderLeaf(props), [])
     return (<>
@@ -39,8 +55,8 @@ import { BaseEditor, Descendant } from 'slate'
 import { ReactEditor } from 'slate-react'
 
 
-type CustomElement = { type: 'paragraph' | 'code' | 'title', children: CustomText[] }
-type CustomText = { text: string}
+type CustomElement = { type: 'paragraph' | 'code' | 'title' | 'math', children: CustomText[] }
+type CustomText = { text: string} | {type: 'math', children: CustomText[]}
 
 declare module 'slate' {
   interface CustomTypes {
