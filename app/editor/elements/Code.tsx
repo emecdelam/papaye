@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 export default function CodeElement(props) {
     return (
         <pre {...props.attributes}>
