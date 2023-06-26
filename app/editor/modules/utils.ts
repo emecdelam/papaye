@@ -8,13 +8,22 @@ export const EditorUtils =  {
     }
 }
 
+
+const BANNED = ["Alt", "Control","AltLeft","AltGraph", "ShiftLeft","ShiftRight","Tab","Backspace","Delete"]
+
 export const ComboHandler = {
     pressed: [],
     handleKeyDown: (editor: Editor, event: KeyboardEvent) => {
-        ComboHandler.pressed.push(event.key)
+        if (!BANNED.includes(event.key)) {
+            ComboHandler.pressed.push(event.key)
+        }
         if (event.key == "Enter") {
             ComboHandler.pressed = []
         }
+        if (event.key == "Backspace") {
+            ComboHandler.pressed.splice(-1,1)
+        }
+        console.log(ComboHandler.pressed)
     },
     isComboPressed: (combo: string) => {
         if (ComboHandler.pressed.slice(-combo.length).toString() == combo.split("").toString()){

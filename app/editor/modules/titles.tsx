@@ -31,7 +31,7 @@ export const TitleModule = {
         }
     },
     handleMarkdownAbreviation(editor: Editor) {
-      for (let x = 5; x >= 1; x -= 1) {
+      for (let x = 5; x > 0; x -= 1) {
         if (ComboHandler.isComboPressed("#".repeat(x) + " ") && EditorUtils.isLineBegining(editor, x)) {
           Transforms.delete(editor, {
             at: editor.selection,
