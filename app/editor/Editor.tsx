@@ -9,16 +9,9 @@ import { useMaths } from "./modules/math"
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
-        children: [{text:" bougnoul", bold:true}],
+        children: [{text:" Great paragraph with maths "}, {type:"math", children: [{text:"x^2"}]}, {text:" inside !"}],
     },
-    {
-        type: 'image',
-        children: [{text:""}],
-        url:"https://cdn.discordapp.com/attachments/1090567982205378632/1122931813552234558/cute-baby-hippos-148-5908843187957__700.png"
-    },
-
 ]
-
 
 export default function EditorComponent() {
     const [editor] = useState(() => withReact(useMaths(useImage(createEditor()))))
@@ -33,6 +26,13 @@ export default function EditorComponent() {
                 FormattingModule.handleKeyDown(editor, event)
                 //Handle titles
                 TitleModule.handleKeyDown(editor,event)
+
+                //Handle utility to be able to match keystrokes combo
+                ComboHandler.handleKeyDown(editor, event)
+
+                //Titles from markdown combos
+                TitleModule.handleMarkdownAbreviation(editor)
+                
                 //New paragraph
                 if (event.key === 'Enter') {
                     event.preventDefault()
@@ -44,6 +44,7 @@ export default function EditorComponent() {
                         }
                     )
                 }
+
             }}/>
         </Slate>
     
@@ -55,6 +56,7 @@ export default function EditorComponent() {
 import { BaseEditor, Descendant } from 'slate'
 import { ReactEditor } from 'slate-react'
 import { useImage } from "./modules/image"
+import { ComboHandler } from "./modules/utils"
 
 
 type CustomElement = { type: 'paragraph' | 'code' | 'title' | 'math', children: CustomText[] }
