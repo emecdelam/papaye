@@ -11,7 +11,7 @@ export const TitleModule = {
               // Toggle the block type depending on whether there's already a match.
               Transforms.setNodes(
                 editor,
-                { type: match ? 'paragraph' : 'title' },
+                { type: (match ? 'paragraph' : 'title'),level:(3)},
                 { match: n => Element.isElement(n) && Editor.isBlock(editor, n)}
               )
               Transforms.setNodes(
