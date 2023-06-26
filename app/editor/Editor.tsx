@@ -21,7 +21,7 @@ const initialValue: Descendant[] = [
 
 
 export default function EditorComponent() {
-    const [editor] = useState(() => withReact(useImage(createEditor())))
+    const [editor] = useState(() => withReact(useMaths(useImage(createEditor()))))
     const renderElementCallback = useCallback(props => renderElement(props), [])
     const renderLeafCallback = useCallback(props => renderLeaf(props), [])
     return (<>
@@ -67,3 +67,4 @@ declare module 'slate' {
     Text: CustomText
   }
 }
+
