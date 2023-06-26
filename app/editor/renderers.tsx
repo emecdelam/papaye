@@ -1,6 +1,7 @@
 import CodeElement from "./elements/Code"
 import Math from "./elements/Math"
 import Paragraph from "./elements/Paragraph"
+import Title from "./elements/Title"
 import DefaultLeaf from "./leafs/leaf"
 
 export function renderElement(props) {
@@ -9,6 +10,8 @@ export function renderElement(props) {
             return <CodeElement {...props}/>
         case 'math':
             return <Math {...props}/>
+        case 'title':
+            return <Title {...props}/>
         default:
             return <Paragraph {...props}/>
     }
