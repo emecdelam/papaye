@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Node } from "slate"
 import katex from "katex"
-import { useFocused, useSelected } from "slate-react"
+import { useSelected } from "slate-react"
 export default function Math(props) {
     const slateSelected = useSelected();
     const [focus, setFocus] = useState(false);
