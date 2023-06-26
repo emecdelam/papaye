@@ -1,14 +1,14 @@
 
 import { useCallback, useState } from "react"
-import { Transforms, createEditor, Editor, Element } from "slate"
+import { Transforms, createEditor, Editor, Element, Text } from "slate"
 import {withReact, Slate, Editable} from "slate-react"
 import { renderElement, renderLeaf } from "./renderers"
 import { FormattingModule } from "./modules/formatting"
-
+import { TitleModule } from "./modules/titles"
 const initialValue: Descendant[] = [
     {
         type: 'paragraph',
-        children: [{text: "Hey im a "}, {text:"super", bold:true}, {text:" paragraph"}, {text:" gras", bold:true}]
+        children: [{text:" gras", bold:true}]
     }
 ]
 
@@ -17,7 +17,6 @@ export default function EditorComponent() {
     const [editor] = useState(() => withReact(createEditor()))
     const renderElementCallback = useCallback(props => renderElement(props), [])
     const renderLeafCallback = useCallback(props => renderLeaf(props), [])
-
     return (<>
     
         <p>Hey im the editor</p>
@@ -25,6 +24,9 @@ export default function EditorComponent() {
             <Editable renderElement={renderElementCallback} renderLeaf={renderLeafCallback} onKeyDown={event => {
                 //Handles italic, bold, underline.
                 FormattingModule.handleKeyDown(editor, event)
+                //Handle titles
+                TitleModule.handleKeyDown(editor,event)
+
             }}/>
         </Slate>
     
@@ -37,7 +39,7 @@ import { BaseEditor, Descendant } from 'slate'
 import { ReactEditor } from 'slate-react'
 
 
-type CustomElement = { type: 'paragraph' | 'code', children: CustomText[] }
+type CustomElement = { type: 'paragraph' | 'code' | 'title', children: CustomText[] }
 type CustomText = { text: string}
 
 declare module 'slate' {
