@@ -10,8 +10,7 @@ export default function CustomProjectPage() {
             <EditorNavbar/>
             <div id="main" className="flex h-full w-full">
                 <FileTree/>
-                <TableOfContent/>
-                <div id="editor" className="flex-grow max-h-fit mb-24 overflow-y-auto">
+                <div id="editor" className="flex-grow">
                 <Editor/>
                 </div>
             </div>

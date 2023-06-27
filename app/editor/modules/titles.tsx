@@ -30,15 +30,23 @@ export const TitleModule = {
             TitleModule.setParagraph(editor, 3)
         }
     },
-    handleMarkdownAbreviation(editor: Editor) {
+    handleMarkdownAbreviation(editor: Editor, event: KeyboardEvent) {
       for (let x = 5; x > 0; x -= 1) {
         if (ComboHandler.isComboPressed("#".repeat(x) + " ") && EditorUtils.isLineBegining(editor, x)) {
+          event.preventDefault(); //Remove space
           Transforms.delete(editor, {
             at: editor.selection,
             distance: x,
             reverse: true
           })
-          TitleModule.setParagraph(editor, x)
+          Transforms.insertNodes(
+            editor,
+            {
+                type:'title',
+                level: x,
+                children: [{text:'', bold: true}]
+            }
+        )
         }
       }
     }

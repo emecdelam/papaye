@@ -45,8 +45,13 @@ export default function EditorComponent() {
     const [editor] = useState(() => withReact(withHistory(useMaths(useImage(createEditor())))))
     const renderElementCallback = useCallback(props => renderElement(props), [])
     const renderLeafCallback = useCallback(props => renderLeaf(props), [])
+    let [toc, setToc] = useState([])
     return (
+        <div className="h-full flex">
+
         <Slate editor={editor} initialValue={initialValue}>
+            <TableOfContent toc={toc}/>
+            <div className="overflow-y-auto mb-24">
             <Editable lang="fr" spellCheck="false" className="w-7/12 outline-none h-full" renderElement={renderElementCallback} renderLeaf={renderLeafCallback} onKeyDown={event => {
                 //Handle utility to be able to match keystrokes combo
                 ComboHandler.handleKeyDown(editor, event)
@@ -56,10 +61,13 @@ export default function EditorComponent() {
                 TitleModule.handleKeyDown(editor,event)
 
                 //Titles from markdown combos
-                TitleModule.handleMarkdownAbreviation(editor)
+                TitleModule.handleMarkdownAbreviation(editor, event)
+
+                
                 
                 //New paragraph
                 if (event.key === 'Enter' && !event.defaultPrevented) { //The event.defaultPrevented check if event has been prevented before
+                    setToc(EditorUtils.getToc(editor))
                     event.preventDefault()
                     Transforms.insertNodes(
                         editor,
@@ -71,7 +79,11 @@ export default function EditorComponent() {
                 }
 
             }}/>
-        </Slate>
+            </div>
+
+        </Slate>        
+        </div>
+
     
     )
 }
@@ -81,8 +93,9 @@ export default function EditorComponent() {
 import { BaseEditor, Descendant } from 'slate'
 import { ReactEditor } from 'slate-react'
 import { useImage } from "./modules/image"
-import { ComboHandler } from "./modules/utils"
+import { ComboHandler, EditorUtils } from "./modules/utils"
 import { withHistory } from "slate-history"
+import TableOfContent from "@/components/ui/editor/toc"
 
 
 type CustomElement = { type: 'paragraph' | 'code' | 'title' | 'math', children: CustomText[] }
