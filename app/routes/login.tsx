@@ -35,7 +35,7 @@ export default function LoginPage() {
     
                     <FormElement>
                         <Label htmlFor="password">Mot de passe</Label>
-                        <Input id="password" name="email" type="password" placeholder="i like potatoes"/>
+                        <Input id="password" name="password" type="password" placeholder="i like potatoes"/>
                     </FormElement>
                     
                     
