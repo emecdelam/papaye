@@ -27,7 +27,7 @@ const List = (props: TocProps) => {
 export default function TableOfContent(props: TocProps) {
     return (
         <div className="h-full w-72 flex-shrink-0">
-            <p className="text-center uppercase font-bold text-lg text-gray-400">Table des matières</p>
+            <p className="uppercase font-bold text-lg text-gray-400">Table des matières</p>
             <List toc={props.toc}/>
         </div> 
     )
