@@ -16,10 +16,7 @@ export default function Navbar(){
                 </Link>
             </div>
         </div>
-
-            <img src='https://cdn.discordapp.com/attachments/1090567982205378632/1122993024037818468/BTZKj_-g-Lj-png__700.png' width='40' height='40' className={profilePicture}>
-
-            </img>
+        <img src='https://cdn.discordapp.com/attachments/1090567982205378632/1122993024037818468/BTZKj_-g-Lj-png__700.png' width='40' height='40' className={profilePicture}/>
     </div>
     )
 }
