@@ -1,5 +1,5 @@
 
-import { Children, useCallback, useState } from "react"
+import { Children, useCallback, useEffect, useState } from "react"
 import { Transforms, createEditor, Editor, Element, Text } from "slate"
 import {withReact, Slate, Editable} from "slate-react"
 import { renderElement, renderLeaf } from "./renderers"
@@ -46,6 +46,9 @@ export default function EditorComponent() {
     const renderElementCallback = useCallback(props => renderElement(props), [])
     const renderLeafCallback = useCallback(props => renderLeaf(props), [])
     let [toc, setToc] = useState([])
+    useEffect(() => {
+        setToc(EditorUtils.getToc(editor))
+    }, []) //Initial setup of table of content
     return (
         <div className="h-full flex">
 
