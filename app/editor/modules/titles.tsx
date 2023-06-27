@@ -3,14 +3,14 @@ import { Editor } from "slate";
 import { Transforms , Element, Text } from 'slate'
 import { ComboHandler, EditorUtils } from "./utils";
 export const TitleModule = {
-    setParagraph(editor: Editor, level: number){
+    setParagraph(editor: Editor, level: number, keepTitle?: boolean){
       const [match] = Editor.nodes(editor, {
         match: n => n.type === 'title',
       })
       // Toggle the block type depending on whether there's already a match.
       Transforms.setNodes(
         editor,
-        { type: (match ? 'paragraph' : 'title'),level},
+        { type: (match && !keepTitle ? 'paragraph' : 'title'),level},
         { match: n => Element.isElement(n) && Editor.isBlock(editor, n)}
       )
       Transforms.setNodes(
@@ -39,14 +39,8 @@ export const TitleModule = {
             distance: x,
             reverse: true
           })
-          Transforms.insertNodes(
-            editor,
-            {
-                type:'title',
-                level: x,
-                children: [{text:'', bold: true}]
-            }
-        )
+          TitleModule.setParagraph(editor, x, true)
+          
         }
       }
     }
