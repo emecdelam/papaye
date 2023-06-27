@@ -1,15 +1,6 @@
 import { buttonContainer, buttonProjects, filterBox, headProjects, mainProjects, searchContainer, tagBox, yourProjects } from "@/styles/projects.css";
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input";
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
+import { Input } from "@/components/ui/forms/input";
+
 export default function Projects_ui(data,filter,setFilter,fetcher,navigate){
     return(
         <div className={mainProjects}>
