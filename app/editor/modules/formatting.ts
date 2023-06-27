@@ -39,5 +39,11 @@ export const FormattingModule = {
                 FormattingModule.toogleMark(editor, "underline")
             }
         }
+        if (event.shiftKey) {
+            if (event.key == "Enter") {
+                event.preventDefault()
+                editor.insertFragment([{text:"\n"}])
+            }
+        }
     }
 }

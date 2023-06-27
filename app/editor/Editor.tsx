@@ -22,19 +22,18 @@ export default function EditorComponent() {
         <p>Hey im the editor</p>
         <Slate editor={editor} initialValue={initialValue}>
             <Editable renderElement={renderElementCallback} renderLeaf={renderLeafCallback} onKeyDown={event => {
+                //Handle utility to be able to match keystrokes combo
+                ComboHandler.handleKeyDown(editor, event)
                 //Handles italic, bold, underline.
                 FormattingModule.handleKeyDown(editor, event)
                 //Handle titles
                 TitleModule.handleKeyDown(editor,event)
 
-                //Handle utility to be able to match keystrokes combo
-                ComboHandler.handleKeyDown(editor, event)
-
                 //Titles from markdown combos
                 TitleModule.handleMarkdownAbreviation(editor)
                 
                 //New paragraph
-                if (event.key === 'Enter') {
+                if (event.key === 'Enter' && !event.defaultPrevented) { //The event.defaultPrevented check if event has been prevented before
                     event.preventDefault()
                     Transforms.insertNodes(
                         editor,
