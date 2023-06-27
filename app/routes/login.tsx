@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { ActionArgs, LoaderArgs, V2_MetaFunction, json } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { authenticator, getUser } from "~/services/auth.server";
@@ -21,12 +22,11 @@ export default function LoginPage() {
                 </div>
                 <div className="mb-5">
                     <label className="block text-md font-semibold" htmlFor="email">Email</label>
-                    <input className="border border-gray-400 mt-1 rounded-md w-full px-5 py-2 bg-gray-50" type="email" name="email" placeholder="john@doe.com" />
+                    <Input type="email" placeholder="john@doe.com"></Input>
                 </div>
                 <div className="mb-10">
                     <label className="block text-md font-semibold" htmlFor="password">Password </label>
-                    <input className="border border-gray-400 rounded-md mt-1 w-full px-5 py-2" type="password" name="password" placeholder="1234" />
-
+                    <Input type="password" placeholder="toto1234"></Input>
                 </div>
                 
                 
