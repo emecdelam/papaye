@@ -1,10 +1,15 @@
 import { KeyboardEvent } from "react"
 import { Editor } from "slate"
+import { ReactEditor } from "slate-react"
 
 export const EditorUtils =  {
     isLineBegining: (editor: Editor, offset?: number) => {
         let position = Editor.start(editor, editor.selection)
         return (position.offset == (offset || 0))
+    },
+    getCaretXY: (editor: Editor): DOMRect => {
+        let selection = ReactEditor.toDOMRange(editor, editor.selection)
+        return selection.getBoundingClientRect()
     }
 }
 
