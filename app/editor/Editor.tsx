@@ -52,22 +52,20 @@ export default function EditorComponent() {
     return (
         <div className="h-full flex">
 
-        <Slate editor={editor} initialValue={initialValue}>
+        <Slate editor={editor} initialValue={initialValue} onChange={() => {
+            //Handle utility to be able to match keystrokes combo
+            ComboHandler.handleKeyDown(editor)
+            //Titles from markdown combos
+            TitleModule.handleMarkdownAbreviation(editor)
+            FormattingModule.handleCombos(editor)
+        }}>
             <TableOfContent toc={toc}/>
             <div className="overflow-y-auto mb-24">
             <Editable lang="fr" spellCheck="false" className="w-7/12 outline-none h-full" renderElement={renderElementCallback} renderLeaf={renderLeafCallback} onKeyDown={event => {
-                //Handle utility to be able to match keystrokes combo
-                ComboHandler.handleKeyDown(editor, event)
                 //Handles italic, bold, underline.
                 FormattingModule.handleKeyDown(editor, event)
                 //Handle titles
-                TitleModule.handleKeyDown(editor,event)
-
-                //Titles from markdown combos
-                TitleModule.handleMarkdownAbreviation(editor, event)
-
-                
-                
+                TitleModule.handleKeyDown(editor,event)                
                 //New paragraph
                 if (event.key === 'Enter' && !event.defaultPrevented) { //The event.defaultPrevented check if event has been prevented before
                     setToc(EditorUtils.getToc(editor))

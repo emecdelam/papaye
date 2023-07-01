@@ -1,12 +1,13 @@
 /*
 
 This module is in charge of formatting text. 
-Like bold, italics, underlined, monospace, and (latex ?)
+Like bold, italics, underlined
 
 */
 
 import { KeyboardEvent } from "react";
 import { Editor } from "slate";
+import { ComboHandler, EditorUtils } from "./utils";
 
 export const FormattingModule = {
 
@@ -44,6 +45,34 @@ export const FormattingModule = {
                 event.preventDefault()
                 editor.insertFragment([{text:"\n"}])
             }
+        }
+    },
+    handleCombos(editor: Editor) {
+        //italic
+        if (ComboHandler.isComboPressed(/[^\*]\*[^ \*][^\*\n]*[^ \*]\*[^\*]/)) {
+            let matchLength = ComboHandler.matchValue.length;
+            let offset = ComboHandler.match.index;
+            EditorUtils.deleteAtOffset(editor, offset, matchLength) //removing the match
+            editor.insertFragment([{text: ComboHandler.matchValue.replaceAll("*",""), italic: true}])
+            Editor.removeMark(editor,"italic") //removes mark for future user typings
+        }
+        //bold
+        if (ComboHandler.isComboPressed(/\*\*[^ ][^\*\n]+[^ ]\*\*/)) {
+            let matchLength = ComboHandler.matchValue.length;
+            let offset = ComboHandler.match.index;
+            EditorUtils.deleteAtOffset(editor, offset, matchLength) //removing the match
+            editor.insertFragment([{text: ComboHandler.matchValue.replaceAll("*",""), bold: true}])
+            Editor.removeMark(editor,"bold") //removes mark for future user typings
+
+        }
+        //underlined
+        if (ComboHandler.isComboPressed(/_[^_\n]+_/)) {
+            let matchLength = ComboHandler.matchValue.length;
+            let offset = ComboHandler.match.index;
+            EditorUtils.deleteAtOffset(editor, offset, matchLength) //removing the match
+            editor.insertFragment([{text: ComboHandler.matchValue.replaceAll("_",""), underline: true}])
+            Editor.removeMark(editor,"underline") //removes mark for future user typings
+
         }
     }
 }

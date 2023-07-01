@@ -1,5 +1,4 @@
-import { KeyboardEvent } from "react"
-import { Descendant, Editor, Element, Node } from "slate"
+import { Editor, Node, Transforms } from "slate"
 import { ReactEditor } from "slate-react"
 
 export const EditorUtils =  {
@@ -10,6 +9,13 @@ export const EditorUtils =  {
     getCaretXY: (editor: Editor): DOMRect => {
         let selection = ReactEditor.toDOMRange(editor, editor.selection)
         return selection.getBoundingClientRect()
+    },
+    deleteAtOffset(editor: Editor, offset: number, distance: number) {
+        let path = editor.selection.anchor.path;
+        Transforms.delete(editor, {
+            at: {path, offset},
+            distance: distance,
+        })
     },
     getToc: (editor: Editor) => {
         let children = editor.children;
@@ -48,27 +54,32 @@ export const EditorUtils =  {
     }
 }
 
-
-const BANNED = ["Alt", "Control","AltLeft","AltGraph", "ShiftLeft","ShiftRight","Tab","Backspace","Delete"]
-
 export const ComboHandler = {
-    pressed: [],
-    handleKeyDown: (editor: Editor, event: KeyboardEvent) => {
-        if (!BANNED.includes(event.key)) {
-            ComboHandler.pressed.push(event.key)
-        }
-        if (event.key == "Enter") {
-            ComboHandler.pressed = []
-        }
-        if (event.key == "Backspace") {
-            ComboHandler.pressed.splice(-1,1)
-        }
+    currentEditingNodeText: "",
+    matchValue: "",
+    match: undefined,
+    handleKeyDown: (editor: Editor) => {
+        //@ts-ignore
+        ComboHandler.currentEditingNodeText = Node.string(Editor.node(editor, editor.selection)[0])
+
     },
-    isComboPressed: (combo: string) => {
-        if (ComboHandler.pressed.slice(-combo.length).toString() == combo.split("").toString()){
-            ComboHandler.pressed = []
+    isComboPressed: (combo: string | RegExp, index?: number) => {
+        let comboRegx: RegExp;
+    
+        if (typeof(combo) == "string") {
+            comboRegx = new RegExp(combo)
+        } else {
+            comboRegx = combo
+        }
+
+        //@ts-ignore
+        let match = comboRegx.exec(ComboHandler.currentEditingNodeText)
+        if (match) {
+            ComboHandler.matchValue = match[index ? index : 0]
+            ComboHandler.match = match
             return true
         }
         return false    
+
     }
 }

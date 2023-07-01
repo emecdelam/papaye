@@ -30,18 +30,16 @@ export const TitleModule = {
             TitleModule.setParagraph(editor, 3)
         }
     },
-    handleMarkdownAbreviation(editor: Editor, event: KeyboardEvent) {
-      for (let x = 5; x > 0; x -= 1) {
-        if (ComboHandler.isComboPressed("#".repeat(x) + " ") && EditorUtils.isLineBegining(editor, x)) {
-          event.preventDefault(); //Remove space
-          Transforms.delete(editor, {
-            at: editor.selection,
-            distance: x,
-            reverse: true
-          })
-          TitleModule.setParagraph(editor, x, true)
-          
-        }
+    handleMarkdownAbreviation(editor: Editor) {
+      if (ComboHandler.isComboPressed(/#{1,5} /) && EditorUtils.isLineBegining(editor, ComboHandler.matchValue.length)) {
+        Transforms.delete(editor, {
+          at: editor.selection,
+          distance: ComboHandler.matchValue.length,
+          reverse: true
+        })
+        TitleModule.setParagraph(editor, ComboHandler.matchValue.length, true)
+        
       }
+      
     }
 }

@@ -16,10 +16,10 @@ interface TocProps {
 const List = (props: TocProps) => {
     return (
         <>
-            {props.toc.map(x => <>
-                <p style={{fontSize: (1.225 - 0.07*(x.level-1))+"rem", paddingLeft: (x.level-1)*10+"px", fontWeight: ((x.level+1) % 2 == 0 ? 'bold': 'regular')}}>{x.title}</p>
+            {props.toc.map(x => <div key={x.title}>
+                <p style={{fontSize: (1.225 - 0.07*(x.level-1))+"rem", paddingLeft: (x.level-1)*10+"px", fontWeight: ((x.level == 1) ? 'bold': 'regular')}}>{x.title}</p>
                 {x.subSections.length > 0 ? <List toc={x.subSections}/>: <></>}
-            </>)}
+            </div>)}
         </>
     )   
 }
